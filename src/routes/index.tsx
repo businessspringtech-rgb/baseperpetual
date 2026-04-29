@@ -11,6 +11,7 @@ import { TradesList } from "@/components/trading/TradesList";
 import { OrderForm } from "@/components/trading/OrderForm";
 import { PositionsPanel } from "@/components/trading/PositionsPanel";
 import { Toaster } from "@/components/ui/sonner";
+import { ConnectWalletButton } from "@/components/trading/ConnectWalletButton";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
@@ -61,9 +62,7 @@ function TradingApp() {
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-bid" />
             Base Mainnet · Live
           </div>
-          <button className="rounded-md bg-primary px-4 py-1.5 text-xs font-semibold text-background hover:opacity-90">
-            Connect Wallet
-          </button>
+          <ConnectWalletButton />
         </div>
       </header>
 
