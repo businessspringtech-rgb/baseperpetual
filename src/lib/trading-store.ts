@@ -87,7 +87,7 @@ export function openPosition(p: { symbol: string; side: Side; size: number; pric
     balance: state.balance - margin,
     positions,
     history: [
-      { id: crypto.randomUUID(), symbol: p.symbol, side: p.side, type: "market", price: p.price, size: p.size, ts: Date.now() },
+      { id: crypto.randomUUID(), symbol: p.symbol, side: p.side, type: "market" as const, price: p.price, size: p.size, ts: Date.now() },
       ...state.history,
     ].slice(0, 100),
   };
@@ -103,7 +103,7 @@ export function closePosition(id: string, markPrice: number) {
     balance: state.balance + pos.margin + pnl,
     positions: state.positions.filter((p) => p.id !== id),
     history: [
-      { id: crypto.randomUUID(), symbol: pos.symbol, side: pos.side === "long" ? "short" : "long", type: "market", price: markPrice, size: pos.size, ts: Date.now() },
+      { id: crypto.randomUUID(), symbol: pos.symbol, side: (pos.side === "long" ? "short" : "long") as Side, type: "market" as const, price: markPrice, size: pos.size, ts: Date.now() },
       ...state.history,
     ].slice(0, 100),
   };
