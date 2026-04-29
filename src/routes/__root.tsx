@@ -1,4 +1,5 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { Web3Provider } from "@/components/Web3Provider";
 
 import appCss from "../styles.css?url";
 
@@ -62,5 +63,9 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
-  return <Outlet />;
+  return (
+    <Web3Provider>
+      <Outlet />
+    </Web3Provider>
+  );
 }
