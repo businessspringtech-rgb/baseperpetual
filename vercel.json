@@ -8,6 +8,6 @@
     }
   },
   "rewrites": [
-    { "source": "/((?!assets/).*)", "destination": "/api/ssr" }
+    { "source": "/((?!api/|assets/).*)", "destination": "/api/ssr" }
   ]
 }
