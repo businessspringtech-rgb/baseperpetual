@@ -4,6 +4,7 @@
   "framework": null,
   "functions": {
     "api/ssr.mjs": {
+      "runtime": "@vercel/node@5.1.14",
       "includeFiles": "dist/server/**"
     }
   },
