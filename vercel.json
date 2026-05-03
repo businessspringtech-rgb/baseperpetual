@@ -2,7 +2,12 @@
   "buildCommand": "bun run build",
   "outputDirectory": "dist/client",
   "framework": null,
+  "functions": {
+    "api/ssr.mjs": {
+      "includeFiles": "dist/server/**"
+    }
+  },
   "rewrites": [
-    { "source": "/((?!_next|favicon\\.ico|assets/).*)", "destination": "/api/ssr" }
+    { "source": "/((?!assets/).*)", "destination": "/api/ssr" }
   ]
 }
