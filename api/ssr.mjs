@@ -1,8 +1,8 @@
 // Vercel Serverless Function that delegates to the TanStack Start SSR build.
-// The Vite build emits a Web-Fetch-style handler at `dist/server/index.js`
+// The Vite build emits a Web-Fetch-style handler at `dist/server/server.js`
 // (default export shape: `{ fetch(request: Request): Promise<Response> }`).
 // This file adapts Node's IncomingMessage/ServerResponse to that handler.
-import handler from "../dist/server/index.js";
+import handler from "../dist/server/server.js";
 
 // No `config` export — Vercel uses the default Node.js runtime, which is what
 // the SSR bundle needs (it imports `node:*` built-ins).
