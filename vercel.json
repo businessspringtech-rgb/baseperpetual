@@ -1,8 +1,8 @@
 {
   "buildCommand": "bun run build",
-  "outputDirectory": "dist",
+  "outputDirectory": "dist/client",
   "framework": null,
   "rewrites": [
-    { "source": "/((?!.*\\.).*)", "destination": "/index.html" }
+    { "source": "/((?!_next|favicon\\.ico|assets/).*)", "destination": "/api/ssr" }
   ]
 }
