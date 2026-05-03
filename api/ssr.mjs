@@ -7,6 +7,9 @@ import handler from "../dist/server/index.js";
 export const config = {
   // Use the Node.js runtime — the SSR bundle relies on `node:*` built-ins.
   runtime: "nodejs20.x",
+  // Make sure the chunked SSR bundle (and its dynamic imports) is shipped
+  // alongside the function.
+  includeFiles: "dist/server/**",
 };
 
 export default async function vercelHandler(req, res) {
