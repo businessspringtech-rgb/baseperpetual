@@ -4,10 +4,8 @@
 // This file adapts Node's IncomingMessage/ServerResponse to that handler.
 import handler from "../dist/server/index.js";
 
-export const config = {
-  // Use the Node.js runtime — the SSR bundle relies on `node:*` built-ins.
-  runtime: "nodejs20.x",
-};
+// No `config` export — Vercel uses the default Node.js runtime, which is what
+// the SSR bundle needs (it imports `node:*` built-ins).
 
 export default async function vercelHandler(req, res) {
   try {
