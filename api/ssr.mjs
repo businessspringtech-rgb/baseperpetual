@@ -1,14 +1,30 @@
 // Vercel Serverless Function that delegates to the TanStack Start SSR build.
-// The Vite build emits a Web-Fetch-style handler at `dist/server/server.js`
-// (default export shape: `{ fetch(request: Request): Promise<Response> }`).
-// This file adapts Node's IncomingMessage/ServerResponse to that handler.
-import handler from "../dist/server/server.js";
+// Import the built server entry lazily so any module-init failures are caught
+// by our request-level error handler instead of crashing the function before
+// logs are emitted.
 
-// No `config` export — Vercel uses the default Node.js runtime, which is what
-// the SSR bundle needs (it imports `node:*` built-ins).
+async function loadFetchHandler() {
+  const mod = await import("../dist/server/server.js");
+  const candidate = mod?.default ?? mod;
+
+  if (typeof candidate === "function") {
+    return candidate;
+  }
+
+  if (typeof candidate?.fetch === "function") {
+    return candidate.fetch.bind(candidate);
+  }
+
+  if (typeof mod?.fetch === "function") {
+    return mod.fetch.bind(mod);
+  }
+
+  throw new TypeError("Unsupported TanStack Start server export shape");
+}
 
 export default async function vercelHandler(req, res) {
   try {
+    const fetchHandler = await loadFetchHandler();
     const protocol =
       (req.headers["x-forwarded-proto"] || "https").toString().split(",")[0];
     const host = req.headers["x-forwarded-host"] || req.headers.host;
@@ -35,7 +51,10 @@ export default async function vercelHandler(req, res) {
       duplex: hasBody ? "half" : undefined,
     });
 
-    const response = await handler.fetch(request);
+    const response = await fetchHandler(request, undefined, {
+      waitUntil() {},
+      passThroughOnException() {},
+    });
 
     res.statusCode = response.status;
     response.headers.forEach((value, key) => {
